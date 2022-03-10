@@ -1,0 +1,15 @@
+.home {
+  background-color: #0b0b0b;
+  overflow: hidden;
+  padding-bottom: 2rem;
+  position: relative;
+}
+.noItems {
+  background-color: #0b0b0b;
+  color: #fff;
+  height: calc(24vh - 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}

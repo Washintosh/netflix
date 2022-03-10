@@ -1,0 +1,92 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    /* url("http://mppmduse2pmpovwapp.azurewebsites.net/wp-content/uploads/2019/09/netflix-background-9.jpg"); */
+      url("https://assets.nflxext.com/ffe/siteui/vlv3/1691099b-ff71-4321-bd54-1bba46b0886b/f9c42f10-5f91-436d-9c59-f473ddd8b7ab/EC-es-20220228-popsignuptwoweeks-perspective_alpha_website_small.jpg");
+  background-size: cover;
+  position: relative;
+}
+.login .top .wrapper {
+  padding: 20px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.login .top .wrapper .logo {
+  height: 40px;
+}
+.login .container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.login .container form {
+  width: 75%;
+  max-width: 500px;
+  padding: 3rem 3.5rem;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.login .container input {
+  width: 100%;
+  height: 40px;
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  border: none;
+  outline: none;
+}
+.login .container input::placeholder {
+  color: lightgray;
+}
+.login .container button {
+  height: 40px;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.login .container span {
+  color: lightgray;
+}
+.login .container span b {
+  color: white;
+}
+.registerBtn {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 900;
+}
+.login .container .messageDiv {
+  color: white;
+  background-color: #e87c03;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+}
+
+@media screen and (max-width: 600px) {
+  .login .container form {
+    padding: 2rem 1.5rem;
+  }
+}
