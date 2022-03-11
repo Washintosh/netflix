@@ -1,12 +1,14 @@
-import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
+import { Notifications, Search } from "@material-ui/icons";
 import { useContext, useState } from "react";
 import "./navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../App";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -38,21 +40,20 @@ const Navbar = () => {
           <img
             src={`${JSON.parse(localStorage.getItem("user")).profilePic}`}
             alt=""
+            onClick={() => {
+              navigate(`/profile/${user._id}`);
+            }}
           />
           <div className="profile">
-            <ArrowDropDown className="icon" />
-            <div className="options">
-              <span>Settings</span>
-              <span
-                onClick={() =>
-                  dispatch({
-                    type: "LOGOUT",
-                  })
-                }
-              >
-                Logout
-              </span>
-            </div>
+            <span
+              onClick={() =>
+                dispatch({
+                  type: "LOGOUT",
+                })
+              }
+            >
+              <LogoutIcon fontSize="large" />
+            </span>
           </div>
         </div>
         <button

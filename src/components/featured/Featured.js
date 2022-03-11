@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Featured({ type, setGenre }) {
   const [content, setContent] = useState({});
-  const { setVideo, isSidebarOpen } = useContext(AuthContext);
+  const { setVideo } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Featured({ type, setGenre }) {
     getRandomContent();
   }, [type]);
   return (
-    <div className={`${isSidebarOpen ? "blur" : ""} featured`}>
+    <div className={`featured`}>
       {type && (
         <div className="category">
           <span>{type === "movies" ? "Movies" : "Series"}</span>

@@ -3,15 +3,17 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../App";
 import "./login.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, isFetching } = useContext(AuthContext);
   const [message, setMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(
         "https://netflix-api-washington.herokuapp.com/api/auth/login",
@@ -61,8 +63,12 @@ export default function Login() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="loginButton" onClick={handleLogin}>
-            Sign In
+          <button
+            className="loginButton"
+            onClick={handleLogin}
+            disabled={isFetching}
+          >
+            {isFetching ? <CircularProgress size="20px" /> : "Sign In"}
           </button>
           <span>
             New to Netflix?{" "}

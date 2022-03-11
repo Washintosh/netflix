@@ -5,9 +5,7 @@
   position: relative;
   transition: filter 0.5s ease;
 }
-.featured.blur {
-  filter: blur(5px);
-}
+
 .featured .category {
   position: absolute;
   top: 80px;

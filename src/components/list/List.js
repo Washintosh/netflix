@@ -2,13 +2,11 @@ import {
   ArrowBackIosOutlined,
   ArrowForwardIosOutlined,
 } from "@material-ui/icons";
-import { useRef, useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../App";
+import { useRef, useState, useEffect } from "react";
 import ListItem from "../listItem/ListItem";
 import "./list.css";
 
 export default function List({ list }) {
-  const { isSidebarOpen } = useContext(AuthContext);
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const [clickLimit, setClickLimit] = useState(0);
@@ -31,7 +29,7 @@ export default function List({ list }) {
     }
   };
   return (
-    <div className={`${isSidebarOpen ? "blur" : ""} list`}>
+    <div className={`list`}>
       <span className="listTitle">{list.title}</span>
       <div className="wrapper">
         <ArrowBackIosOutlined

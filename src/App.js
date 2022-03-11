@@ -8,26 +8,52 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
 import Watch from "./pages/watch/Watch";
+import Profile from "./pages/profile/Profile";
 import { createContext, useEffect, useReducer, useState } from "react";
-import AuthReducer from "./authContext/authReducer.js";
-//ELIMINAR EL DISPATCH DEL LOGIN
 const AuthContext = createContext();
 
 const App = () => {
   const authReducerFunction = (state, action) => {
+    if (action.type === "LOGIN_START") {
+      return {
+        user: null,
+        isFetching: true,
+      };
+    }
     if (action.type === "LOGIN_SUCCESS") {
       return {
         user: action.payload,
+        isFetching: false,
       };
     }
     if (action.type === "LOGIN_FAILURE") {
       return {
         user: null,
+        isFetching: false,
       };
     }
     if (action.type === "LOGOUT") {
       return {
         user: null,
+        isFetching: false,
+      };
+    }
+    if (action.type === "UPDATE_START") {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+    if (action.type === "UPDATE_SUCCESS") {
+      return {
+        user: action.payload,
+        isFetching: false,
+      };
+    }
+    if (action.type === "UPDATE_FAILURE") {
+      return {
+        ...state,
+        isFetching: false,
       };
     }
   };
@@ -36,6 +62,7 @@ const App = () => {
   };
   const [state, dispatch] = useReducer(authReducerFunction, initialState);
   const user = state.user;
+  const isFetching = state.isFetching;
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -49,6 +76,7 @@ const App = () => {
       value={{
         dispatch,
         user,
+        isFetching,
         video,
         setVideo,
         isSidebarOpen,
@@ -80,6 +108,10 @@ const App = () => {
           <Route
             path="/watch"
             element={user ? <Watch /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile/:id"
+            element={user ? <Profile /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>
