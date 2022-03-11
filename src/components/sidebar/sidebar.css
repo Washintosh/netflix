@@ -13,6 +13,8 @@
 }
 .closeSpace {
   backdrop-filter: blur(0.5rem);
+  position: relative;
+  z-index: 20;
 }
 .sidebar {
   display: none;

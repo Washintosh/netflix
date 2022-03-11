@@ -28,10 +28,12 @@
 }
 .list .wrapper .sliderArrow.left {
   left: 0;
+  z-index: 1;
 }
 
 .list .wrapper .sliderArrow.right {
   right: 0;
+  z-index: 0;
 }
 .list .wrapper .container {
   margin-left: 50px;
