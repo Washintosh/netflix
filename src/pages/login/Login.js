@@ -4,8 +4,8 @@ import { AuthContext } from "../../context/authContext/AuthContext";
 import axios from "axios";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("washington@gmail.com");
+  const [password, setPassword] = useState("washington");
   const { dispatch } = useContext(AuthContext);
   const [message, setMessage] = useState("");
 
@@ -40,12 +40,14 @@ export default function Login() {
           type="text"
           placeholder="email"
           className="loginInput"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="password"
           className="loginInput"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         {message && <span>{message}</span>}
