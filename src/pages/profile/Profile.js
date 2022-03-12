@@ -36,69 +36,76 @@ const Profile = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const uploadUser = {};
-    dispatch({ type: "UPDATE_START" });
     if (username !== user.username) uploadUser.username = username;
     if (email !== user.email) uploadUser.email = email;
-    if (profilePic !== user.profilePic) {
-      const filename = new Date().getTime() + profilePic.name;
-      const uploadTask = uploadBytesResumable(
-        ref(storage, `/profile/${filename}`),
-        profilePic
-      );
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            uploadUser.profilePic = url;
-            const updateUser = async () => {
-              try {
-                const res = await axios.put(
-                  `https://netflix-api-washington.herokuapp.com/api/users/${id}`,
-                  uploadUser,
-                  {
-                    headers: {
-                      token:
-                        "Bearer " +
-                        JSON.parse(localStorage.getItem("user")).accessToken,
-                    },
-                  }
-                );
-                const {
-                  password: {},
-                  ...updatedUser
-                } = res.data.user;
-                dispatch({
-                  type: "UPDATE_SUCCESS",
-                  payload: { ...updatedUser, accessToken },
-                });
-                setAlert({
-                  show: true,
-                  message: "The user was successfully updated",
-                  success: true,
-                });
-              } catch (error) {
-                setAlert({
-                  show: true,
-                  message: JSON.parse(error.request.response).message,
-                  success: false,
-                });
-                dispatch({
-                  type: "UPDATE_FAILURE",
-                });
-              }
-            };
-            updateUser();
+    if (
+      uploadUser.username ||
+      uploadUser.email ||
+      profilePic !== user.profilePic
+    ) {
+      dispatch({ type: "UPDATE_START" });
+      const updateUser = async (body) => {
+        try {
+          const res = await axios.put(
+            `https://netflix-api-washington.herokuapp.com/api/users/${id}`,
+            body,
+            {
+              headers: {
+                token:
+                  "Bearer " +
+                  JSON.parse(localStorage.getItem("user")).accessToken,
+              },
+            }
+          );
+          const {
+            password: {},
+            ...updatedUser
+          } = res.data.user;
+          dispatch({
+            type: "UPDATE_SUCCESS",
+            payload: { ...updatedUser, accessToken },
+          });
+          setAlert({
+            show: true,
+            message: "The user was successfully updated",
+            success: true,
+          });
+        } catch (error) {
+          setAlert({
+            show: true,
+            message: JSON.parse(error.request.response).message,
+            success: false,
+          });
+          dispatch({
+            type: "UPDATE_FAILURE",
           });
         }
-      );
+      };
+      updateUser(uploadUser);
+
+      if (profilePic !== user.profilePic) {
+        const filename = new Date().getTime() + profilePic.name;
+        const uploadTask = uploadBytesResumable(
+          ref(storage, `/profile/${filename}`),
+          profilePic
+        );
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              updateUser({ profilePic: url });
+            });
+          }
+        );
+      }
     }
   };
   return (
@@ -137,6 +144,7 @@ const Profile = () => {
             onChange={(e) => setProfilePic(e.target.files[0])}
             accept="image/*"
           />
+          <p>Change profile picture</p>
         </label>
         <input
           value={username}

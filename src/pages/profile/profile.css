@@ -24,6 +24,15 @@
   transform: scale(1.5);
 }
 
+.profile .image {
+  cursor: pointer;
+  text-align: center;
+}
+
+.profile .image p {
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 0.5rem;
+}
 .profile .image input {
   display: none;
 }
@@ -31,7 +40,6 @@
   position: relative;
   width: 200px;
   height: 200px;
-  cursor: pointer;
   z-index: 10;
 }
 .profile .image .imgContainer img {
